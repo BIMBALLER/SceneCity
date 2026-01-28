@@ -1,0 +1,37 @@
+/* 1. Import the Professional Font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
+/* 2. Force Global Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  background-color: #000000 !important;
+  /* This forces the Viva Cinemas Font everywhere */
+  font-family: 'Montserrat', sans-serif !important; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Force headings to be Bold and Uppercase like Viva */
+h1, h2, h3 {
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  color: white !important;
+}
+
+/* Force the Red Accents */
+.text-rose-600 {
+  color: #e11d48 !important;
+}
+
+.bg-rose-600 {
+  background-color: #e11d48 !important;
+}
