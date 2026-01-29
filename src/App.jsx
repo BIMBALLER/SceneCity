@@ -9,17 +9,14 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   
-  // Ref for the ticket element to enable downloading
   const ticketRef = useRef(null);
 
-  // States for Booking & Club
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [viewingDetails, setViewingDetails] = useState(null); 
   const [showClubModal, setShowClubModal] = useState(false);
   const [showTicket, setShowTicket] = useState(false); 
   const [userName, setUserName] = useState('');
 
-  // Admin States
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newMovie, setNewMovie] = useState({ 
@@ -30,7 +27,15 @@ const App = () => {
 
   const categories = ['All', 'Action', 'Comedy', 'Romance', 'Horror', 'Drama'];
 
-  // CONFIGURATION
+  // REVIEWS DATA
+  const REVIEWS = [
+    { name: "Segun Arinze", text: "The 4K projection at Scene City is unmatched in Kwara!", stars: 5 },
+    { name: "Amina Yusuf", text: "Sapphire Lounge is the perfect vibe for a Friday night.", stars: 5 },
+    { name: "David O.", text: "Best gaming experience I've had. The VR is top-notch.", stars: 5 },
+    { name: "Blessing", text: "The Kiddies Arena is safe and fun. My kids loved it!", stars: 5 },
+    { name: "Ibrahim", text: "Private, premium, and professional. Scene City is elite.", stars: 5 }
+  ];
+
   const TEL_1 = "08111112441";
   const TEL_2 = "08111112428";
   const OFFICE_ADDRESS = "5, Rabiat Ibilola Ajeigbe, Off Ojoku Road, Offa, Kwara State";
@@ -43,8 +48,6 @@ const App = () => {
     { title: "KIDDIES ARENA", desc: "Safe, fun, and engaging for the little ones.", img: "https://images.unsplash.com/photo-1566411520896-01e7ca4726af?q=80&w=2070" }
   ];
 
-  const OTHER_SERVICES = ["Eatery", "Snooker & Co", "Cornershop", "Karaoke", "Pool", "Hair Barbing Salon", "Massage Service", "Multipurpose Hall"];
-
   const fetchListings = async () => {
     try {
       const { data, error } = await supabase.from('listings').select('*').order('created_at', { ascending: false });
@@ -56,7 +59,6 @@ const App = () => {
 
   useEffect(() => { fetchListings(); }, []);
 
-  // DELETE FUNCTION FOR ADMIN
   const handleDeleteMovie = async (e, id) => {
     e.stopPropagation();
     if (window.confirm("Permanently delete this movie from listings?")) {
@@ -64,13 +66,10 @@ const App = () => {
         const { error } = await supabase.from('listings').delete().eq('id', id);
         if (error) throw error;
         fetchListings();
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
+      } catch (err) { alert("Error: " + err.message); }
     }
   };
 
-  // DOWNLOAD TICKET FUNCTION
   const downloadTicket = async () => {
     if (ticketRef.current) {
       const canvas = await html2canvas(ticketRef.current, {
@@ -91,8 +90,7 @@ const App = () => {
     if (activeCategory !== 'All') result = result.filter(item => item.category === activeCategory);
     if (searchQuery) {
       result = result.filter(item => 
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (item.cast && item.cast.toLowerCase().includes(searchQuery.toLowerCase()))
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     setFilteredItems(result);
@@ -125,7 +123,7 @@ const App = () => {
   if (loading) return <div className="bg-black text-rose-600 h-screen flex items-center justify-center font-black text-xl tracking-widest uppercase animate-pulse">Scene City Offa...</div>;
 
   return (
-    <div className="bg-black min-h-screen text-white font-sans selection:bg-rose-600 selection:text-white">
+    <div className="bg-black min-h-screen text-white font-sans selection:bg-rose-600 selection:text-white overflow-x-hidden">
       
       {/* TOP BAR */}
       <div className="bg-[#111] px-4 md:px-12 py-2 flex justify-between items-center text-[9px] font-bold border-b border-[#222]">
@@ -141,7 +139,7 @@ const App = () => {
         <div className="flex items-center justify-between w-full md:w-auto gap-8">
           <div onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">
             <div className="bg-rose-600 text-white px-3 py-1 font-black text-2xl italic">A</div>
-            <span className="text-2xl font-black tracking-tighter">SCENE<span className="text-rose-600">CITY</span></span>
+            <span className="text-2xl font-black tracking-tighter uppercase">SCENE<span className="text-rose-600">CITY</span></span>
           </div>
           <div className="relative hidden lg:block">
             <input type="text" placeholder="Search movies..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-[#111] border border-[#333] text-white pl-10 pr-4 py-2.5 rounded-full text-sm w-[350px] outline-none focus:border-rose-600" />
@@ -156,7 +154,7 @@ const App = () => {
       {/* CATEGORY BAR */}
       <div className="px-4 md:px-12 py-4 flex gap-3 overflow-x-auto no-scrollbar bg-[#050505] border-b border-[#111]">
         {categories.map(cat => (
-          <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-2 rounded-full text-[10px] font-black border ${activeCategory === cat ? 'bg-rose-600 border-rose-600' : 'border-[#222] text-[#666]'}`}>{cat.toUpperCase()}</button>
+          <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-2 rounded-full text-[10px] font-black border transition-all ${activeCategory === cat ? 'bg-rose-600 border-rose-600' : 'border-[#222] text-[#666]'}`}>{cat.toUpperCase()}</button>
         ))}
       </div>
 
@@ -169,7 +167,6 @@ const App = () => {
       <main className="px-4 md:px-12 pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
         {filteredItems.map((movie) => (
           <div key={movie.id} onClick={() => setViewingDetails(movie)} className="group cursor-pointer relative bg-[#0a0a0a] rounded-2xl border border-[#1a1a1a] p-2 hover:border-rose-600 transition-all">
-            {/* ADMIN DELETE BUTTON */}
             {isAdmin && (
               <button onClick={(e) => handleDeleteMovie(e, movie.id)} className="absolute top-4 right-4 z-[110] bg-black/80 text-rose-600 border border-rose-600/50 w-8 h-8 rounded-full font-black hover:bg-rose-600 hover:text-white transition-all">✕</button>
             )}
@@ -178,12 +175,48 @@ const App = () => {
               <div className="absolute top-4 left-4 bg-rose-600 text-white px-3 py-1 text-[10px] font-black uppercase rounded-sm z-10">{movie.category}</div>
             </div>
             <div className="mt-6 px-4 pb-4 flex justify-between items-center">
-              <h3 className="text-xl font-black uppercase leading-tight">{movie.title}</h3>
+              <h3 className="text-xl font-black uppercase leading-tight italic">{movie.title}</h3>
               <span className="text-rose-600 font-black">{movie.price}</span>
             </div>
           </div>
         ))}
       </main>
+
+      {/* FIXED REVIEW WALL */}
+      <section className="py-12 bg-rose-600 overflow-hidden relative border-y border-rose-700/50">
+        <div className="flex animate-marquee min-w-full">
+          {[...REVIEWS, ...REVIEWS, ...REVIEWS].map((rev, i) => (
+            <div key={i} className="flex-shrink-0 mx-4 bg-black/10 p-6 rounded-3xl border border-white/5 w-[320px]">
+              <div className="flex gap-1 mb-3">
+                {[...Array(rev.stars)].map((_, s) => (
+                  <span key={s} className="text-white text-[10px]">★</span>
+                ))}
+              </div>
+              <p className="text-sm font-black uppercase italic text-white mb-3 leading-snug whitespace-normal">
+                "{rev.text}"
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-[1px] bg-rose-950"></div>
+                <p className="text-[9px] font-black text-rose-950 uppercase tracking-widest">{rev.name}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.33%); }
+          }
+          .animate-marquee {
+            display: flex;
+            animation: marquee 40s linear infinite;
+            width: max-content;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </section>
 
       {/* VIBE GALLERY */}
       <section className="px-4 md:px-12 py-24 bg-[#050505] border-y border-[#111]">
@@ -267,12 +300,11 @@ const App = () => {
         </div>
       )}
 
-      {/* DIGITAL TICKET STUB MODAL */}
+      {/* DIGITAL TICKET MODAL */}
       {showTicket && (
         <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 backdrop-blur-xl">
           <div onClick={() => setShowTicket(false)} className="absolute inset-0 bg-black/80"></div>
           <div className="relative w-full max-w-sm">
-            {/* The Ticket Graphic */}
             <div ref={ticketRef} className="bg-rose-600 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(225,29,72,0.3)]">
               <div className="p-8 border-b-2 border-dashed border-rose-800/50 relative">
                 <div className="absolute -bottom-3 -left-3 w-6 h-6 bg-black rounded-full"></div>
@@ -287,7 +319,6 @@ const App = () => {
               <div className="p-8 bg-rose-600">
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    {/* CHANGED TO VIEWER */}
                     <span className="text-[8px] font-black text-rose-950 uppercase block mb-1">VIEWER</span>
                     <span className="font-black uppercase text-sm truncate block">{userName}</span>
                   </div>
@@ -302,8 +333,6 @@ const App = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Actions */}
             <div className="mt-8 space-y-4 text-center">
               <button onClick={downloadTicket} className="w-full bg-white text-black py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-rose-600 hover:text-white transition-all flex items-center justify-center gap-2">
                 Download Ticket ↓
