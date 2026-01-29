@@ -235,20 +235,20 @@ const App = () => {
         </div>
       </section>
 
-      {/* LOCATION & CARDS */}
-      <section className="px-4 md:px-12 py-24">
+      {/* LOCATION & CONTACT SECTION */}
+      <section className="px-4 md:px-12 py-24 border-b border-[#111]">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl font-black italic uppercase leading-none mb-6">FIND <span className="text-rose-600">US</span></h2>
             <a href={MAPS_URL} target="_blank" className="text-[#555] block mb-10 hover:text-white transition-colors">{OFFICE_ADDRESS}</a>
             <div className="flex gap-4">
-              <a href={`tel:${TEL_1}`} className="flex-1 bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl text-center">
-                <span className="text-[10px] font-black text-[#444] block mb-2">MANAGER</span>
-                <span className="font-black">{TEL_1}</span>
+              <a href={`tel:${TEL_1}`} className="flex-1 bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl text-center group hover:border-rose-600 transition-all">
+                <span className="text-[10px] font-black text-[#444] block mb-2 uppercase">MANAGER</span>
+                <span className="font-black group-hover:text-rose-600">{TEL_1}</span>
               </a>
-              <a href={`tel:${TEL_2}`} className="flex-1 bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl text-center">
-                <span className="text-[10px] font-black text-[#444] block mb-2">FRONT DESK</span>
-                <span className="font-black">{TEL_2}</span>
+              <a href={`tel:${TEL_2}`} className="flex-1 bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl text-center group hover:border-rose-600 transition-all">
+                <span className="text-[10px] font-black text-[#444] block mb-2 uppercase">FRONT DESK</span>
+                <span className="font-black group-hover:text-rose-600">{TEL_2}</span>
               </a>
             </div>
           </div>
@@ -258,14 +258,82 @@ const App = () => {
               <span className="text-[9px] font-black uppercase text-[#444]">Security & Fun</span>
             </div>
             <div className="aspect-square bg-rose-600 rounded-3xl flex flex-col items-center justify-center p-6 text-center">
-              <span className="text-white text-3xl font-black italic mb-2 uppercase">Sapphire</span>
-              <span className="text-[9px] font-black uppercase text-black/60">Elite Club</span>
+              <span className="text-white text-3xl font-black italic mb-2 uppercase leading-none">Sapphire Club</span>
+              <span className="text-[9px] font-black uppercase text-black/60">Elite Access</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* MOVIE DETAILS MODAL */}
+      {/* DETAILED FOOTER */}
+      <footer className="bg-black pt-20 pb-10 px-4 md:px-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+          
+          {/* Brand Col */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <div className="bg-rose-600 text-white px-3 py-1 font-black text-xl italic leading-none">A</div>
+              <span className="text-xl font-black tracking-tighter uppercase">SCENE<span className="text-rose-600">CITY</span></span>
+            </div>
+            <p className="text-[#444] text-[11px] font-bold leading-relaxed uppercase tracking-wider">
+              The ultimate entertainment destination in Offa. Experience 4K cinema, high-end gaming, and elite lounge vibes under one roof.
+            </p>
+          </div>
+
+          {/* Services Col */}
+          <div>
+            <h4 className="text-white font-black text-xs uppercase italic mb-6 tracking-widest">Our Services</h4>
+            <ul className="space-y-3 text-[10px] font-black text-[#666] uppercase">
+              <li className="hover:text-rose-600 cursor-pointer transition-colors">Premium 4K Cinema</li>
+              <li className="hover:text-rose-600 cursor-pointer transition-colors">VR & Console Gaming</li>
+              <li className="hover:text-rose-600 cursor-pointer transition-colors">Sapphire VIP Lounge</li>
+              <li className="hover:text-rose-600 cursor-pointer transition-colors">Kiddies Arena</li>
+              <li className="hover:text-rose-600 cursor-pointer transition-colors">Event Hall Booking</li>
+            </ul>
+          </div>
+
+          {/* Support Col */}
+          <div>
+            <h4 className="text-white font-black text-xs uppercase italic mb-6 tracking-widest">Company</h4>
+            <ul className="space-y-3 text-[10px] font-black text-[#666] uppercase">
+              <li className="hover:text-white cursor-pointer transition-colors">About Scene City</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Club Sapphire Perks</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Private Screenings</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Terms of Service</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Privacy Policy</li>
+            </ul>
+          </div>
+
+          {/* Hours Col */}
+          <div>
+            <h4 className="text-white font-black text-xs uppercase italic mb-6 tracking-widest">Opening Hours</h4>
+            <div className="space-y-4">
+              <div className="flex justify-between border-b border-[#111] pb-2">
+                <span className="text-[10px] font-black text-[#444] uppercase">Mon — Thu</span>
+                <span className="text-[10px] font-black text-white">10AM — 10PM</span>
+              </div>
+              <div className="flex justify-between border-b border-[#111] pb-2">
+                <span className="text-[10px] font-black text-rose-600 uppercase italic">Fri — Sun</span>
+                <span className="text-[10px] font-black text-white">10AM — LATE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-10 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[9px] font-black text-[#222] tracking-[0.4em] uppercase">
+            © 2026 Scene City Offa • High Standards Only
+          </p>
+          <div className="flex gap-8 text-[9px] font-black text-[#333] uppercase tracking-widest">
+            <span className="hover:text-rose-600 cursor-pointer transition-colors">Instagram</span>
+            <span className="hover:text-rose-600 cursor-pointer transition-colors">Facebook</span>
+            <span className="hover:text-rose-600 cursor-pointer transition-colors">WhatsApp</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* MODALS & FORMS (KEPT AS IS) */}
       {viewingDetails && (
         <div className="fixed inset-0 z-[3000] flex items-end md:items-center justify-center p-4">
           <div onClick={() => setViewingDetails(null)} className="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
@@ -288,7 +356,6 @@ const App = () => {
         </div>
       )}
 
-      {/* BOOKING INPUT MODAL */}
       {selectedMovie && !showTicket && (
         <div className="fixed inset-0 z-[4000] flex items-center justify-center p-4">
           <div onClick={() => setSelectedMovie(null)} className="absolute inset-0 bg-black/95"></div>
@@ -300,7 +367,6 @@ const App = () => {
         </div>
       )}
 
-      {/* DIGITAL TICKET MODAL */}
       {showTicket && (
         <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 backdrop-blur-xl">
           <div onClick={() => setShowTicket(false)} className="absolute inset-0 bg-black/80"></div>
@@ -346,7 +412,6 @@ const App = () => {
         </div>
       )}
 
-      {/* ADMIN ADD FORM */}
       {showAddForm && (
         <div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 overflow-y-auto">
           <div onClick={() => setShowAddForm(false)} className="absolute inset-0 bg-black/98"></div>
@@ -367,7 +432,6 @@ const App = () => {
         </div>
       )}
 
-      {/* CLUB MODAL */}
       {showClubModal && (
         <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-[4000] p-4 backdrop-blur-md">
           <div className="bg-[#0a0a0a] p-12 max-w-md w-full text-center border border-rose-600/50 rounded-[40px]">
@@ -381,10 +445,6 @@ const App = () => {
           </div>
         </div>
       )}
-
-      <footer className="py-10 text-center border-t border-[#111]">
-        <p className="text-[9px] font-black text-[#222] tracking-[0.5em] uppercase">Scene City Offa 2026 • High Standards Only</p>
-      </footer>
     </div>
   );
 };
