@@ -121,8 +121,8 @@ const App = () => {
       <div className="bg-[#111] px-4 md:px-12 py-2 flex justify-between items-center text-[9px] font-bold border-b border-[#222]">
         <div className={isAdmin ? 'text-rose-500' : 'text-[#444]'}>{isAdmin ? 'ADMIN AUTHORIZED' : OFFICE_ADDRESS.toUpperCase()}</div>
         <div className="hidden sm:flex gap-5 text-rose-500">
-          <span>{TEL_1}</span>
-          <span>{TEL_2}</span>
+          <a href={`tel:${TEL_1}`}>{TEL_1}</a>
+          <a href={`tel:${TEL_2}`}>{TEL_2}</a>
         </div>
       </div>
 
@@ -138,7 +138,7 @@ const App = () => {
           </div>
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto justify-center">
-          {isAdmin && <button onClick={() => setShowAddForm(true)} className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[11px] hover:bg-rose-600 hover:text-white transition-all">+ ADD MOVIE</button>}
+          {isAdmin && <button onClick={() => setShowAddForm(true)} className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[11px] hover:bg-rose-600 hover:text-white transition-all whitespace-nowrap">+ ADD MOVIE</button>}
           <button onClick={() => setShowClubModal(true)} className="bg-rose-600 text-white px-8 py-2.5 rounded-full font-black text-[11px] hover:scale-105 transition-transform whitespace-nowrap">JOIN CLUB</button>
         </div>
       </nav>
@@ -164,8 +164,8 @@ const App = () => {
               {isAdmin && <button onClick={(e) => { e.stopPropagation(); handleDelete(movie.id, movie.title); }} className="absolute top-4 right-4 bg-black/50 text-white w-8 h-8 rounded-full font-bold z-10 hover:bg-rose-600 transition-colors">✕</button>}
             </div>
             <div className="mt-6 px-4 pb-4">
-              <h3 className="text-xl font-black uppercase mb-2">{movie.title}</h3>
-              <p className="text-[#666] text-xs line-clamp-2">Read more details...</p>
+              <h3 className="text-xl font-black uppercase mb-2 leading-tight">{movie.title}</h3>
+              <p className="text-[#666] text-xs line-clamp-2">More details & storyline...</p>
               <div className="flex justify-between items-center pt-4 border-t border-[#1a1a1a] mt-4">
                 <span className="text-xl font-black text-rose-600">{movie.price}</span>
                 <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Details →</span>
@@ -175,14 +175,16 @@ const App = () => {
         ))}
       </main>
 
-      {/* MOVIE DETAILS MODAL */}
+      {/* FULL MOVIE DETAILS MODAL - REDESIGNED TO PREVENT OVERLAP */}
       {viewingDetails && (
         <div className="fixed inset-0 z-[3000] flex items-end md:items-center justify-center">
           <div onClick={() => setViewingDetails(null)} className="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
           <div className="relative bg-[#0a0a0a] w-full max-w-4xl h-[85vh] md:h-auto md:max-h-[90vh] overflow-y-auto rounded-t-[40px] md:rounded-[40px] border-t md:border border-[#222] shadow-2xl">
             <div className="p-8 md:p-12">
               <div className="flex flex-col md:flex-row gap-10">
-                <div className="w-full md:w-1/3 shrink-0"><img src={viewingDetails.image_url} alt={viewingDetails.title} className="w-full rounded-2xl shadow-2xl border border-[#222]" /></div>
+                <div className="w-full md:w-1/3 shrink-0">
+                  <img src={viewingDetails.image_url} alt={viewingDetails.title} className="w-full rounded-2xl shadow-2xl border border-[#222]" />
+                </div>
                 <div className="w-full md:w-2/3 space-y-6">
                   <div>
                     <span className="text-rose-600 font-black text-xs tracking-widest uppercase">{viewingDetails.category}</span>
@@ -222,7 +224,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* RESTORED: LOCATION & THE MISSING CARDS */}
+      {/* LOCATION & CONTACT SECTION */}
       <section className="px-4 md:px-12 py-24 bg-black">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div>
@@ -230,18 +232,18 @@ const App = () => {
                 <h2 className="text-4xl md:text-5xl font-black italic mb-8 uppercase leading-none">5, RABIAT IBILOLA <br/><span className="text-rose-600">AJEIGBE</span></h2>
                 <p className="text-[#555] italic mb-10">{OFFICE_ADDRESS}</p>
                 <div className="flex flex-col sm:flex-row gap-6">
-                    <a href={`tel:${TEL_1}`} className="flex flex-col bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl hover:border-rose-600 transition-colors">
-                        <span className="text-[10px] font-black text-[#444] mb-2 uppercase">MANAGER</span>
+                    {/* Click-to-call links */}
+                    <a href={`tel:${TEL_1}`} className="flex flex-col bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl hover:border-rose-600 transition-all group active:scale-95">
+                        <span className="text-[10px] font-black text-[#444] mb-2 uppercase group-hover:text-rose-600">MANAGER</span>
                         <span className="text-xl font-black">{TEL_1}</span>
                     </a>
-                    <a href={`tel:${TEL_2}`} className="flex flex-col bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl hover:border-rose-600 transition-colors">
-                        <span className="text-[10px] font-black text-[#444] mb-2 uppercase">FRONT DESK</span>
+                    <a href={`tel:${TEL_2}`} className="flex flex-col bg-[#0a0a0a] border border-[#1a1a1a] p-6 rounded-2xl hover:border-rose-600 transition-all group active:scale-95">
+                        <span className="text-[10px] font-black text-[#444] mb-2 uppercase group-hover:text-rose-600">FRONT DESK</span>
                         <span className="text-xl font-black">{TEL_2}</span>
                     </a>
                 </div>
             </div>
 
-            {/* RESTORED: 24/7 AND SAPPHIRE CARDS */}
             <div className="grid grid-cols-2 gap-6">
                 <div className="aspect-square bg-[#0a0a0a] rounded-3xl border border-[#111] flex flex-col items-center justify-center p-8 text-center">
                     <span className="text-rose-600 text-5xl mb-4 italic font-black">24/7</span>
@@ -287,19 +289,23 @@ const App = () => {
       {showAddForm && (
         <div className="fixed inset-0 bg-black/98 flex items-center justify-center z-[5000] p-4 overflow-y-auto">
           <div className="bg-[#0a0a0a] p-10 max-w-md w-full rounded-[30px] border border-[#222] my-auto">
-            <h2 className="font-black text-2xl mb-8 uppercase italic">Add Movie</h2>
+            <h2 className="font-black text-2xl mb-8 uppercase italic"><span className="bg-rose-600 w-3 h-8 inline-block mr-2"></span> Add Movie</h2>
             <form onSubmit={handleAddMovie} className="space-y-5">
-              <input required placeholder="TITLE" value={newMovie.title} onChange={e => setNewMovie({...newMovie, title: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl outline-none font-bold" />
+              <input required placeholder="TITLE" value={newMovie.title} onChange={e => setNewMovie({...newMovie, title: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl outline-none focus:border-rose-600 font-bold" />
               <div className="grid grid-cols-2 gap-3">
-                <select value={newMovie.category} onChange={e => setNewMovie({...newMovie, category: e.target.value})} className="bg-black border border-[#222] p-4 rounded-xl font-bold">
+                <select value={newMovie.category} onChange={e => setNewMovie({...newMovie, category: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold">
                   {categories.filter(c => c !== 'All').map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <input required placeholder="GENRE" value={newMovie.genre} onChange={e => setNewMovie({...newMovie, genre: e.target.value})} className="bg-black border border-[#222] p-4 rounded-xl font-bold" />
+                <input required placeholder="GENRE" value={newMovie.genre} onChange={e => setNewMovie({...newMovie, genre: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
               </div>
-              <textarea required placeholder="DESCRIPTION" value={newMovie.description} onChange={e => setNewMovie({...newMovie, description: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl h-24"></textarea>
-              <input required placeholder="PRICE" value={newMovie.price} onChange={e => setNewMovie({...newMovie, price: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
-              <input required placeholder="POSTER URL" value={newMovie.image_url} onChange={e => setNewMovie({...newMovie, image_url: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
-              <button className="w-full bg-white text-black py-5 rounded-xl font-black uppercase">Publish</button>
+              <input required placeholder="CAST" value={newMovie.cast} onChange={e => setNewMovie({...newMovie, cast: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
+              <textarea required placeholder="STORY" value={newMovie.description} onChange={e => setNewMovie({...newMovie, description: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl h-28 resize-none"></textarea>
+              <div className="grid grid-cols-2 gap-3">
+                <input required placeholder="PRICE" value={newMovie.price} onChange={e => setNewMovie({...newMovie, price: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
+                <input required placeholder="POSTER URL" value={newMovie.image_url} onChange={e => setNewMovie({...newMovie, image_url: e.target.value})} className="w-full bg-black border border-[#222] p-4 rounded-xl font-bold" />
+              </div>
+              <button className="w-full bg-white text-black py-5 rounded-xl font-black uppercase text-xs">Publish Movie</button>
+              <button type="button" onClick={() => setShowAddForm(false)} className="w-full text-[#333] text-[10px] font-black uppercase mt-4">Cancel</button>
             </form>
           </div>
         </div>
